@@ -1,5 +1,7 @@
-import Home from './Home/Home'
+import List from './List/List'
+import Form from './Form/Form'
 
 export {
-    Home,
+    List,
+    Form
 }
