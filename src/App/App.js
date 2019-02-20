@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Form} from './components/index.js'
+import { List, Form } from './components/index.js'
 
 const App = () => (
   <div className="row mt-5">

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from "react-redux"
-import './css/Home.scss'
+import './css/List.scss'
 
 const mapStateToProps = state => {
    return { articles: state.articles };
