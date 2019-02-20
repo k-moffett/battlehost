@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   entry: './src/index.js',
@@ -16,13 +17,46 @@ module.exports = {
            loader: 'babel-loader'
          }
       },
+      // {
+      //   test: /\.scss$/,
+      //   loaders: [
+      //     require.resolve('style-loader'),
+      //     require.resolve('css-loader'),
+      //     require.resolve('sass-loader')
+      //   ]
+      // },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                localIdentName: '[name]__[local]___[hash:base64:5]'
+              }
+            },
+            'postcss-loader'
+          ]
+        })
+      },
       {
         test: /\.scss$/,
-        loaders: [
-          require.resolve('style-loader'),
-          require.resolve('css-loader'),
-          require.resolve('sass-loader')
-        ]
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [{
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 2,
+              localIdentName: '[name]__[local]___[hash:base64:5]'
+            }
+          },
+           'sass-loader'
+         ]
+        })
       },
       {
         exclude: [/\.(js|jsx|mjs)$/,/\.html$/,/\.json$/, /\.scss$/],
@@ -36,7 +70,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
        template: './src/index.html'
-    })
+    }),
+    new ExtractTextPlugin({filename: 'styles.css', allChunks: true})
   ]
 }
 
